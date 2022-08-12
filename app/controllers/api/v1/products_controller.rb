@@ -4,7 +4,8 @@ class Api::V1::ProductsController < ApplicationController
   before_action :check_owner, only: %i[update destroy]
 
   def index
-    render json: Product.all
+    # render json: Product.all # chequear en postman el formato de la respuesta
+    render json: { data: Product.all }
   end
 
   def show
