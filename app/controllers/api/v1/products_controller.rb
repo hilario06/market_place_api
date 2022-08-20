@@ -4,8 +4,11 @@ class Api::V1::ProductsController < ApplicationController
   before_action :check_owner, only: %i[update destroy]
 
   def index
+    # @products = Product.search(params)
+    # render json: ProductSerializer.new(@products).serializable_hash
     # render json: Product.all # chequear en postman el formato de la respuesta
-    render json: { data: Product.all }
+    @products = Product.search(params)
+    render json: { data: @products }
   end
 
   def show
