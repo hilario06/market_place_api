@@ -1,7 +1,17 @@
 class Api::V1::OrdersController < ApplicationController
-  before_action :check_login, only: %i[index]
+  before_action :check_login, only: %i[index show]
 
   def index
     render json: { data: current_user.orders }
+  end
+
+  def show
+    order = current_user.orders.find(params[:id])
+    if order
+      options = { include: [:products] }
+      render json: OrderSerializer.new(order, options).serializable_hash
+    else
+      head 404
+    end
   end
 end
